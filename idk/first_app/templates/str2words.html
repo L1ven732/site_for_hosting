@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Str2Words</title>
+</head>
+<body>
+    <p>Меню:</p>
+    <ul>
+        <a href="http://127.0.0.1:8000/">Главная</a>
+        <a href="http://127.0.0.1:8000/time">Время</a>
+        <a href="http://127.0.0.1:8000/calc">Калькулятор</a>
+        <a href="http://127.0.0.1:8000/multiply">Таблица умножения</a>
+        <a href="http://127.0.0.1:8000/expression">Выражение</a>
+        <a href="http://127.0.0.1:8000/history">История выражений</a>
+        <a href="http://127.0.0.1:8000/str2words">Разбор строки</a>
+        <a href="http://127.0.0.1:8000/str_history">История разборов</a>
+        {% if user.is_authenticated %}
+        <a href="http://127.0.0.1:8000/logout">Выйти</a>
+        {% endif %}
+        {% if user.is_authenticated == False %}
+        <a href="http://127.0.0.1:8000/login">Войти</a>
+        {% endif %}
+    </ul>
+
+    <h1>Разбор строки</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="input_text">Введите строку:</label><br>
+        <textarea name="input_text" id="input_text" rows="4" cols="50">{{ input_text|default_if_none:"" }}</textarea><br><br>
+        <input type="submit" value="Анализировать">
+    </form>
+
+    {% if input_text %}
+        <h2>Результаты анализа</h2>
+        <p><strong>Количество слов:</strong> {{ word_count }}</p>
+        <p><strong>Количество чисел:</strong> {{ number_count }}</p>
+
+        <h3>Слова:</h3>
+        <ul>
+            {% for word in words %}
+                <li>{{ word }}</li>
+            {% empty %}
+                <li>Нет слов</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Числа:</h3>
+        <ul>
+            {% for number in numbers %}
+                <li>{{ number }}</li>
+            {% empty %}
+                <li>Нет чисел</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

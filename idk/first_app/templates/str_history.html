@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>История запросов</title>
+</head>
+<body>
+    <p>Меню:</p>
+    <ul>
+        <a href="http://127.0.0.1:8000/">Главная</a>
+        <a href="http://127.0.0.1:8000/time">Время</a>
+        <a href="http://127.0.0.1:8000/calc">Калькулятор</a>
+        <a href="http://127.0.0.1:8000/multiply">Таблица умножения</a>
+        <a href="http://127.0.0.1:8000/expression">Выражение</a>
+        <a href="http://127.0.0.1:8000/history">История выражений</a>
+        <a href="http://127.0.0.1:8000/str2words">Разбор строки</a>
+        <a href="http://127.0.0.1:8000/str_history">История разборов</a>
+        {% if user.is_authenticated %}
+        <a href="http://127.0.0.1:8000/logout">Выйти</a>
+        {% endif %}
+        {% if user.is_authenticated == False %}
+        <a href="http://127.0.0.1:8000/login">Войти</a>
+        {% endif %}
+    </ul>
+    <h1>История ваших запросов</h1>
+
+    {% if history %}
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Дата и время</th>
+                <th>Входная строка</th>
+                <th>Символов</th>
+                <th>Слов</th>
+            </tr>
+            {% for entry in history %}
+                <tr>
+                    <td>{{ entry.timestamp }}</td>
+                    <td>{{ entry.input_text }}</td>
+                    <td>{{ entry.char_count }}</td>
+                    <td>{{ entry.word_count }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Вы еще не отправляли ни одного запроса.</p>
+    {% endif %}
+
+    <p><a href="http://127.0.0.1:8000/str2words/">Назад к анализу строки</a></p>
+</body>
+</html>

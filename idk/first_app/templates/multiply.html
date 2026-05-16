@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>multiply_page</title>
+</head>
+<body>
+    <p>Меню:</p>
+    <ul>
+        <a href="http://127.0.0.1:8000/">Главная</a>
+        <a href="http://127.0.0.1:8000/time">Время</a>
+        <a href="http://127.0.0.1:8000/calc">Калькулятор</a>
+        <a href="http://127.0.0.1:8000/multiply">Таблица умножения</a>
+        <a href="http://127.0.0.1:8000/expression">Выражение</a>
+        <a href="http://127.0.0.1:8000/history">История выражений</a>
+        <a href="http://127.0.0.1:8000/str2words">Разбор строки</a>
+        <a href="http://127.0.0.1:8000/str_history">История разборов</a>
+        {% if user.is_authenticated %}
+        <a href="http://127.0.0.1:8000/logout">Выйти</a>
+        {% endif %}
+        {% if user.is_authenticated == False %}
+        <a href="http://127.0.0.1:8000/login">Войти</a>
+        {% endif %}
+    </ul>
+
+    <p>Курс "Промышленное программирование"</p>
+    {% if result %}
+        <ul>
+            {% for row in result %}
+                <li>{{ row }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Значение для умножения не задано</p>
+    {% endif %}
+</body>
+</html>
